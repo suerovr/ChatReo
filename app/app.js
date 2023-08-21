@@ -7,7 +7,7 @@ const server = http.createServer(app);
 const socketIO = require("socket.io")
 
 const io = socketIO(server);
-
+console.log("강성호")
 //라우팅
 const home = require("./src/routes/ChatReo");
 app.use("/", home);
