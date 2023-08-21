@@ -7,6 +7,7 @@ const ctrl =require('./ChatReo.ctrl')
 
 router.get("/ChatReo", ctrl.view.ChatWithReo)
 router.get("/", ctrl.view.DtReohome)
+router.get("/login", ctrl.view.login)
 
 //외부 파일 사용모듈 출력
 module.exports = router;

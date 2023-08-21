@@ -9,11 +9,10 @@ const view = {
         res.render("DtReohome/DtReoHome");
     },
 
-    hospRecomWin: (req, res)=> {
-        res.render("hospRecomWin/hospRecom");
+    login: (req, res)=> {
+        res.render("login/login");
     },
     
-
 
 }
 
