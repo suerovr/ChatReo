@@ -2,17 +2,9 @@
 //출력
 const view = {
     ChatWithReo: (req, res)=> {
-        res.render("ChatWithReo/chatWithReo");
+        res.render("chatWithReo/chatWithReo");
     },
 
-    DtReohome: (req, res)=> {
-        res.render("DtReohome/DtReoHome");
-    },
-
-    login: (req, res)=> {
-        res.render("login/login");
-    },
-    
 
 }
 

@@ -7,11 +7,13 @@ const server = http.createServer(app);
 const socketIO = require("socket.io")
 
 const io = socketIO(server);
-console.log("강성호")
+
 //라우팅
+
+app.use(bodyParser.urlencoded({ extended: true }));
 const home = require("./src/routes");
 app.use("/", home);
-app.use(bodyParser.urlencoded({ extended: true }));
+
 
 //정적함수 변환
 const staticDirectoriesViews = [
