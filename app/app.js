@@ -9,7 +9,7 @@ const socketIO = require("socket.io")
 const io = socketIO(server);
 console.log("강성호")
 //라우팅
-const home = require("./src/routes/ChatReo");
+const home = require("./src/routes");
 app.use("/", home);
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -17,7 +17,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const staticDirectoriesViews = [
   'chatWithReo',
   'DtReohome',
-  'hoshome'
+  'hoshome',
+  'Onboding',
+  'login',
 ];
 
 for (const dir of staticDirectoriesViews) {
@@ -25,10 +27,7 @@ for (const dir of staticDirectoriesViews) {
   app.use(express.static(staticDir));
 }
 
-//라우터
-//로그인 라우터
-const loginRoutes = require('./src/routes/login/login');
-app.use(loginRoutes);
+
 
 //view engine 세팅
 app.set('views', "./src/views");
