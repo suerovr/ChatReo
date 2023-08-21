@@ -5,6 +5,7 @@ const app = express();
 const path = require("path")
 const server = http.createServer(app);
 const socketIO = require("socket.io")
+const session = require('express-session');
 
 const io = socketIO(server);
 
@@ -29,8 +30,6 @@ for (const dir of staticDirectoriesViews) {
   app.use(express.static(staticDir));
 }
 
-
-
 //view engine 세팅
 app.set('views', "./src/views");
 app.set("view engine","ejs");
@@ -42,5 +41,11 @@ io.on("connection",(socket)=>{
         io.emit("chatting",`그래 반가워 ${data}`)
     })
 })
+
+app.use(session({
+  secret: 'your-secret-key', // 세션을 암호화하는데 사용되는 비밀 키
+  resave: false,
+  saveUninitialized: true
+}));
 
 module.exports = app;
