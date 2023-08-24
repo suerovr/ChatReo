@@ -15,6 +15,7 @@ const GPTIMGSRC = "chatReoImage/chatReoGPTProfile.svg"
 let recentSpeaker = ""
 
 let disablePoint = 0;
+let emphasizeDisable = 0;
 
 let chatObject = {
     bubbleForm:"",
@@ -69,6 +70,7 @@ function addUserChattingBubble(text){
     }
     const boxDiv = document.createElement("div");
     const textDiv = document.createElement("div");
+    messages.push({ role: 'user',content:text})
 
     boxDiv.classList.add(USERCHATBOX)
     textDiv.innerText = text;
@@ -80,7 +82,6 @@ function addUserChattingBubble(text){
     
     recentSpeaker = "user";
     recentUserMessage = textDiv.innerText;
-    
     
     displayContainerScrollTop()
     chattingPush(addUserChattingBubble,text)
@@ -116,6 +117,7 @@ function gptHeadChecker(boxDiv){
 //gpt말풍선 만들기
 function addGPTChattingBubble(text){
 
+    messages.push({role:'assistant', content: text})
     const boxDiv = document.createElement("div");
     const textDiv = document.createElement("div");
 
@@ -128,7 +130,9 @@ function addGPTChattingBubble(text){
     gptHeadChecker(boxDiv);
 
     boxDiv.appendChild(textDiv)
-    emphasizeKeywords(textDiv)
+    if (emphasizeDisable == 0){
+        emphasizeKeywords(textDiv)
+    }
     recentSpeaker = "gpt";
     recentMessage = textDiv.innerText;
     chattingPush(addGPTChattingBubble,text)
