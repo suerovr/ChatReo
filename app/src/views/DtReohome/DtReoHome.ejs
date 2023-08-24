@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dr.Reo</title>
-    <link rel="stylesheet" href="./DtReoHome.css">
+    <link rel="stylesheet" href="DtReoHome.css">
 </head>
 
 <body>
@@ -23,7 +23,7 @@
         </div>
 
         <div class="box">
-            <form action="/ChatReo" method="POST">
+            <form action="/ChatReo-go" method="POST">
                 <button type="submit" class="ChatWithReoBox" style="cursor: pointer;">
                     <img class="ChattingIcon" src="DtReoHomeImg/DtReoHomeChattingIcon.svg" alt="아이콘">
                     <h1 class="BTNBigText">AI 대화</h1>
@@ -31,24 +31,29 @@
                 </button>
             </form>
     
-
-            <button class="HospRecomBox" onclick="location.href='../hospRecomWin/hospRecom.html'">
-                <img class="RecomIcon" src="DtReoHomeImg/DtReoHospRecomIcon.svg" alt="아이콘">
-                <h1 class="BTNBigText">질병 백과</h1>
-                <h1 class="BTNSmallText">500여가지 질병 바로 알기</h1>
-            </button>
+            <form action="/HosRecomBox-go" method="POST">
+                <button class="HospRecomBox" onclick="location.href='../hospRecomWin/hospRecom.html'">
+                    <img class="RecomIcon" src="DtReoHomeImg/dictionary.svg" alt="아이콘">
+                    <h1 class="BTNBigText">멍냥 백과</h1>
+                    <h1 class="BTNSmallText">우리 아이 더 알아보기</h1>
+                </button>
+            </form>
     
-            <button class="DiagLogBox" onclick="location.href='../DiagLog/DiagLog.html'">
-                <img class="DiagLogIcon" src="DtReoHomeImg/DtReoDiagLogIcon.svg" alt="아이콘">
-                <h1 class="BTNBigText">진단 기록</h1>
-                <h1 class="BTNSmallText">진단 기록 한눈에 보기</h1>
-            </button>
+            <form action="/DiagLog-go" method="POST">
+                <button class="DiagLogBox" onclick="location.href='../DiagLog/DiagLog.html'">
+                    <img class="DiagLogIcon" src="DtReoHomeImg/DtReoDiagLogIcon.svg" alt="아이콘">
+                    <h1 class="BTNBigText">진단 기록</h1>
+                    <h1 class="BTNSmallText">진단 기록 한눈에 보기</h1>
+                </button>
+            </form>
     
-            <button class="ChatListBox" onclick="location.href='../chatList/chatList.html'">
-                <img class="ChatListIcon" src="DtReoHomeImg/DtReoChattingListIcon.svg" alt="아이콘">
-                <h1 class="BTNBigText">대화 목록</h1>
-                <h1 class="BTNSmallText">질문 기록 한눈에 보기</h1>
-            </button>
+            <form action="/ChatList-go" method="POST">
+                <button class="ChatListBox" onclick="location.href='../chatList/chatList.html'">
+                    <img class="ChatListIcon" src="DtReoHomeImg/DtReoChattingListIcon.svg" alt="아이콘">
+                    <h1 class="BTNBigText">대화 목록</h1>
+                    <h1 class="BTNSmallText">질문 기록 한눈에 보기</h1>
+                </button>
+            </form>
         </div>
 
         <div class="bottom">Dr.Reo</div>

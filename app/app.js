@@ -23,6 +23,8 @@ const staticDirectoriesViews = [
   'hoshome',
   'Onboding',
   'login',
+  'chatList',
+  'DiagLog'
 ];
 
 for (const dir of staticDirectoriesViews) {
