@@ -76,15 +76,17 @@ function addUserChattingBubble(text){
     textDiv.innerText = text;
     textDiv.classList.add(USERCHATTEXT)
 
+    sendChatToServer(chatRoomID=dbchatRoomID,email=dbemail,bubbleForm="userText",value=text)
+    
     displayContainer.appendChild(boxDiv)
     boxDiv.appendChild(textDiv)
     chatInput.value = "";
+    
     
     recentSpeaker = "user";
     recentUserMessage = textDiv.innerText;
     
     displayContainerScrollTop()
-    chattingPush(addUserChattingBubble,text)
     GPTLogicFnc()
 }
 
@@ -128,14 +130,20 @@ function addGPTChattingBubble(text){
     displayContainer.appendChild(boxDiv)
 
     gptHeadChecker(boxDiv);
+    if (questionSign == 0){
+    sendChatToServer(chatRoomID=dbchatRoomID,email=dbemail,bubbleForm="gptText",value=text)
+    } else if (questionSign == 1){
+        sendChatToServer(chatRoomID=dbchatRoomID,email=dbemail,bubbleForm="gptText",value=text,question = "true")
+    } else if (diagnoseSign == 1){
+        sendChatToServer(chatRoomID=dbchatRoomID,email=dbemail,bubbleForm="gptText",value=text,diagnose = "true")
 
+    }
     boxDiv.appendChild(textDiv)
     if (emphasizeDisable == 0){
         emphasizeKeywords(textDiv)
     }
     recentSpeaker = "gpt";
     recentMessage = textDiv.innerText;
-    chattingPush(addGPTChattingBubble,text)
     displayContainerScrollTop()
 }
 
@@ -143,7 +151,14 @@ function addGPTChattingBubble(text){
 function chatListPrinter(chatList){
     disablePoint = 1;
     for (let i = 0; i < chatList.length;i++){
-        (chatList[i].bubbleForm)(chatList[i].value)
+        if (chatList[i].bubbleForm == "userText"){
+            addUserChattingBubble((chatList[i].value))
+        } else if (chatList[i].bubbleForm == "gptText"){
+            addGPTChattingBubble((chatList[i].value))
+        } else if (chatList[i].bubbleForm == "gptOption"){
+            addGPTOptions(eval(chatList[i].value))
+        }
+        
     }
     disablePoint = 0;
     displayContainerScrollTop()

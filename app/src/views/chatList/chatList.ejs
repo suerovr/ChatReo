@@ -8,11 +8,16 @@
 </head>
 <body>
     <div class="container">
-        <a href="../DtReohome/DtReoHome.html" class="chatListBackBtn">
-            <svg xmlns="http://www.w3.org/2000/svg" width="21" height="19" viewBox="0 0 21 19" fill="none" alt = "backBtn">
-                <path d="M19.6523 8.3273H4.59891L11.1755 2.26145C11.7011 1.77668 11.7011 0.981161 11.1755 0.496391C10.6499 0.0116198 9.8009 0.0116198 9.27531 0.496391L0.394192 8.68777C-0.131397 9.17255 -0.131397 9.95564 0.394192 10.4404L9.27531 18.6318C9.8009 19.1166 10.6499 19.1166 11.1755 18.6318C11.7011 18.147 11.7011 17.3639 11.1755 16.8792L4.59891 10.8133H19.6523C20.3936 10.8133 21 10.254 21 9.57031C21 8.88665 20.3936 8.3273 19.6523 8.3273Z" fill="black"/>
-              </svg>
-        </a>
+        <form action="/home-go" method="POST" id="postToChatListForm">
+            <!-- 버튼 스타일을 유지하기 위해 원래의 CSS 클래스를 a 태그에 적용합니다. -->
+            <a href="#" class="chatListBackBtn" onclick="document.getElementById('postToChatListForm').submit();">
+                <!-- SVG 코드는 그대로 유지합니다. -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="21" height="19" viewBox="0 0 21 19" fill="none" alt="backBtn">
+                    <path d="M19.6523 8.3273H4.59891L11.1755 2.26145C11.7011 1.77668 11.7011 0.981161 11.1755 0.496391C10.6499 0.0116198 9.8009 0.0116198 9.27531 0.496391L0.394192 8.68777C-0.131397 9.17255 -0.131397 9.95564 0.394192 10.4404L9.27531 18.6318C9.8009 19.1166 10.6499 19.1166 11.1755 18.6318C11.7011 18.147 11.7011 17.3639 11.1755 16.8792L4.59891 10.8133H19.6523C20.3936 10.8133 21 10.254 21 9.57031C21 8.88665 20.3936 8.3273 19.6523 8.3273Z" fill="black"/>
+                </svg>
+            </a>
+        </form>
+
         <img src="chatListImg/chatReoLine.svg" class="chatListLine" alt="">
         <div class="chatListTitle">대화 목록</div>     
         <div class="displayContainer">
@@ -67,5 +72,180 @@
             </div>  
         </div>
     </div> 
+    
+    <script>
+                function processString(inputString) {
+            let outputString = "";
+            let brCount = 0;
+            let skipRemaining = false;
+            
+            for (let i = 0; i < inputString.length; i++) {
+                if (!skipRemaining) {
+                    outputString += inputString[i];
+                }
+                
+                if ((i + 1) % 14 === 0 && !skipRemaining) {
+                    outputString += "<br>";
+                    brCount++;
+                    
+                    if (brCount === 2) {
+                        outputString += "⦁⦁⦁";
+                        skipRemaining = true;
+                    }
+                }
+            }
+            
+            return outputString;
+        }
+
+        function extractUniqueChatRoomIDs(dataArrays) {
+            const uniqueChatRoomIDs = [];
+            const chatRoomIDSet = new Set(); // Set을 사용하여 중복을 허용하지 않는 데이터 구조 생성
+            for (const datae of dataArrays) {
+                const chatRoomID = datae.ChatRoomID;
+                if (!chatRoomIDSet.has(chatRoomID)) {
+                    chatRoomIDSet.add(chatRoomID); // 새 ChatRoomID를 Set에 추가
+                    uniqueChatRoomIDs.push(chatRoomID); // 중복이 아닐 경우에만 새 배열에 추가
+                }
+            }
+            
+            return uniqueChatRoomIDs;
+        }
+
+        function checkTrue(chatRoomID, dataArray) {
+            let returnvalue = 0;
+            for (const data of dataArray) {
+                if (data.ChatRoomID == chatRoomID && data.diagnose == "true") {
+                    returnvalue = 2
+                }
+                if (data.ChatRoomID == chatRoomID && data.question == "true" && returnvalue != 2) {
+                    returnvalue = 1
+                }
+                if (data.ChatRoomID == chatRoomID && ((returnvalue == 1)&&(data.diagnose =="true")||(returnvalue == 2)&&(data.question =="true"))) {
+                    returnvalue = 3
+                }
+            }
+
+            return returnvalue; // 해당하는 오브젝트가 없거나 question이 "true"가 아닌 경우 false를 반환
+        }
+        
+
+async function fetchChatsByEmail(email) {
+    const url = `/getChatsByEmail?email=${email}`;
+
+    try {
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            console.error(`Failed to fetch chats: HTTP status ${response.status}`);
+            return null;
+        }
+
+        const chats = await response.json();
+        console.log("Fetched chats:", chats);
+        const datas = chats;
+        datas.push({})
+        let realDatas = []
+        let CCRD = {}
+        let havingDiag = 0
+        let havingQues = 0
+        let PCRD = {}
+        for (let i = 0; i < datas.length;i++){
+            if (PCRD.ChatRoomID != datas[i].ChatRoomID){
+                realDatas.push(PCRD)
+                console.log(`\n${PCRD.ChatRoomID}와 ${datas[i].ChatRoomID}교착`)
+                havingDiag = 0
+                havingQues = 0
+                CCRD = datas[i]
+            }
+
+            console.log(`현재 havingDiag = ${havingDiag}, havingQues = ${havingQues}, Diag ="${datas[i].diagnose}, Ques = "${datas[i].question}"`)
+            if (datas[i].diagnose == 'true' && havingDiag == 0){
+                CCRD = datas[i]
+                havingDiag = 1
+                console.log(`diag등록 ${i}번 havingDiag = ${havingDiag}, havingQues = ${havingQues}`)
+            } else if (datas[i].question == "true" && havingDiag == 0 && havingQues == 0){
+                CCRD = datas[i]
+                havingQues = 1
+                console.log(`Ques등록 ${i}번 havingDiag = ${havingDiag}, havingQues = ${havingQues}`)
+            } else if (havingQues == 0 && havingDiag == 0){
+                CCRD = datas[i]
+                console.log(`아무개등록 ${i}번 havingDiag = ${havingDiag}, havingQues = ${havingQues}`)
+            } else (console.log(`미등록 ${i}번 havingDiag = ${havingDiag}, havingQues = ${havingQues}`))
+
+            
+            
+            
+            PCRD = datas[i];
+            
+        }
+        realDatas.shift();
+        for (let i = 0; i < realDatas.length;i++){
+            data = realDatas[i]
+
+            const DisplayContainer = document.querySelector(".displayContainer")
+
+            const chatListContainer = document.createElement("div")
+            const chatListBox = document.createElement("button")
+            const img = document.createElement("img")
+            const chatListBoxTitle = document.createElement("div")
+            const chatListCount = document.createElement("div")
+            const chatListDate = document.createElement("div")
+            const chatListPart = document.createElement("div")
+
+            chatListContainer.classList.add("chatListContainer")
+            chatListBox.classList.add("chatListBox")
+            chatListBox.addEventListener("click", function() {
+                window.localStorage.setItem("needPrint", "true")
+                window.localStorage.setItem("RoomKey", data.ChatRoomID)
+                location.href = "/ChatReo";
+            });
+            img.classList.add("chatListContentImg")
+            img.src = "chatListImg/reo.svg"
+            chatListBoxTitle.classList.add("chatListBoxTitle")
+
+            chatListPart.classList.add("chatListPart")
+
+            if (checkTrue(data.ChatRoomID,datas) == 3){
+                
+                chatListCount.classList.add("chatListCount")
+                chatListDate.classList.add("chatListDate")
+                chatListCount.innerText = "진단"
+                chatListDate.innerText = "질문"
+            } else if (checkTrue(data.ChatRoomID,datas) == 2){
+                
+                chatListCount.classList.add("chatListCount")
+                chatListDate.classList.add("chatListDate2")
+                chatListCount.innerText = "진단"
+            }else if (checkTrue(data.ChatRoomID,datas) == 1){
+                
+                chatListCount.classList.add("chatListCount2")
+                chatListDate.classList.add("chatListDate2")
+                chatListCount.innerText = "질문"
+            }
+
+            chatListBoxTitle.innerText = `${data.ChatRoomID.slice(0,2)}월 ${data.ChatRoomID.slice(2,4)}일`
+            chatListPart.innerHTML = processString(data.value)
+
+            DisplayContainer.appendChild(chatListContainer)
+            chatListContainer.appendChild(chatListBox)
+            chatListBox.appendChild(img)
+            chatListBox.appendChild(chatListBoxTitle)
+            chatListBox.appendChild(chatListCount)
+            chatListBox.appendChild(chatListDate)
+            chatListBox.appendChild(chatListPart)
+        }
+        
+    } catch (error) {
+        console.error("Error fetching chats:", error);
+        return null;
+    }
+}
+
+fetchChatsByEmail("280615testemail");
+
+
+    </script>
+    
 </body>
 </html>

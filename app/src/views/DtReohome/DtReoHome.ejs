@@ -31,8 +31,8 @@
                 </button>
             </form>
     
-            <form action="/HosRecomBox-go" method="POST">
-                <button class="HospRecomBox" onclick="location.href='../hospRecomWin/hospRecom.html'">
+            <form action="/HosRecomBox-go" method="POST" id="hosRecomBoxForm">
+                <button class="HospRecomBox" type="submit">
                     <img class="RecomIcon" src="DtReoHomeImg/dictionary.svg" alt="아이콘">
                     <h1 class="BTNBigText">멍냥 백과</h1>
                     <h1 class="BTNSmallText">우리 아이 더 알아보기</h1>
@@ -58,5 +58,19 @@
 
         <div class="bottom">Dr.Reo</div>
     </div>
+    <script>
+        
+        const chattingBtn = document.querySelector(".ChatWithReoBox")
+        chattingBtn.addEventListener("click",()=>{
+            let today = new Date();
+            let month = String(today.getMonth()+1).padStart(2,'0');
+            let day = String(today.getDate()).padStart(2,'0');
+            let hours = String(today.getHours()).padStart(2, '0');// 시
+            let minutes = String(today.getMinutes()).padStart(2, '0'); // 분
+            let seconds = String(today.getSeconds()).padStart(2, '0'); // 초
+            const TimeString = String(month)+String(day)+String(hours)+String(minutes)+String(seconds)
+            window.localStorage.setItem("RoomKey", TimeString)
+        })
+    </script>
 </body>
 </html>

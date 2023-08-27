@@ -9,9 +9,16 @@ const session = require('express-session');
 
 const io = socketIO(server);
 
+const cors = require('cors');
+app.use(cors());
 //라우팅
-
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+//view engine 세팅
+app.set('views', "./src/views");
+app.set("view engine","ejs");
+
 const home = require("./src/routes");
 app.use("/", home);
 
@@ -24,7 +31,8 @@ const staticDirectoriesViews = [
   'Onboding',
   'login',
   'chatList',
-  'DiagLog'
+  'DiagLog',
+  'test'
 ];
 
 for (const dir of staticDirectoriesViews) {
@@ -32,9 +40,7 @@ for (const dir of staticDirectoriesViews) {
   app.use(express.static(staticDir));
 }
 
-//view engine 세팅
-app.set('views', "./src/views");
-app.set("view engine","ejs");
+
 
 //소켓
 io.on("connection",(socket)=>{ 

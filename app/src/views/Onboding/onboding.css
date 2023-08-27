@@ -30,6 +30,50 @@ body {
     height: 796px;
 }
 
+.video-container-1 {
+    width: 260px;
+    height: 500px;
+    flex-shrink: 0;
+    position: relative;
+    top: -700px;
+    left: 456px;
+    background-color: #000; /* 배경색을 검정색으로 설정 */
+    overflow: hidden; /* 영상 외부 영역을 숨김 */
+}
+
+.video-container-2 {
+    width: 260px;
+    height: 500px;
+    flex-shrink: 0;
+    position: relative;
+    top: -720px;
+    left: 847px;
+    background-color: #000; /* 배경색을 검정색으로 설정 */
+    overflow: hidden; /* 영상 외부 영역을 숨김 */
+}
+
+.video-container-3 {
+    width: 260px;
+    height: 500px;
+    flex-shrink: 0;
+    position: relative;
+    top: -1520px;
+    left: 1235px;
+    background-color: #000; /* 배경색을 검정색으로 설정 */
+    overflow: hidden; /* 영상 외부 영역을 숨김 */
+}
+
+.video-container-4 {
+    width: 260px;
+    height: 500px;
+    flex-shrink: 0;
+    position: relative;
+    top: -2370px;
+    left: 1625px;
+    background-color: #000; /* 배경색을 검정색으로 설정 */
+    overflow: hidden; /* 영상 외부 영역을 숨김 */
+}
+
 .mainlogo {
     width: 199px;
     height: 206px;
@@ -39,22 +83,13 @@ body {
     left: 95px;
 }
 
-.petfoot {
-    width: 45px;
-    height: 42px;
+.robot_gif_1 {
+    width: 580px;
+    height: 480px;
     flex-shrink: 0;
     position: absolute;
-    top: 45px;
-    left: 172.5px;
-}
-
-.robot1 {
-    width: 274px;
-    height: 274px;
-    flex-shrink: 0;
-    position: absolute;
-    top: 414px;
-    left: 58px;
+    top: 256px;
+    left: -120px;
 }
 
 .robot2 {
@@ -66,13 +101,10 @@ body {
     left: 448px;
 }
 
-.robot3 {
-    width: 274px;
-    height: 274px;
-    flex-shrink: 0;
-    position: absolute;
-    top: 414px;
-    left: 838px;
+.video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .robot4 {
@@ -84,14 +116,22 @@ body {
     left: 1228px;
 }
 
-.robot_gif {
-    width: 506px;
-    height: 394px;
+.robot5 {
+    width: 274px;
+    height: 274px;
     flex-shrink: 0;
     position: absolute;
-    bottom: 3250px;
-    left: 1484px;
-    z-index: 999;
+    top: 414px;
+    left: 1228px;
+}
+
+.robot6 {
+    width: 274px;
+    height: 274px;
+    flex-shrink: 0;
+    position: absolute;
+    bottom: 2500px;
+    left: 1616px;
 }
 
 .shadow {
@@ -99,8 +139,8 @@ body {
     height: 100px;
     flex-shrink: 0;
     position: absolute;
-    bottom: 3260px;
-    left: 1680px;
+    top:620px;
+    left: 120px;
 }
 
 .startbox {
@@ -108,7 +148,7 @@ body {
     height: 102px;
     flex-shrink: 0;
     position: absolute;
-    bottom: 3184px;
+    bottom: 2384px;
     left: 1560px;
 }
 
@@ -117,116 +157,101 @@ body {
     height: 26px;
     flex-shrink: 0;
     position: absolute;
-    bottom: 3218px;
+    bottom: 2420px;
     left: 1700px;
 }
 
-/* 펫톡 */
+/* 온보딩 화면 1 굵은 글씨 */
 .h1 {
     color: #000;
     text-align: center;
     font-family: Pretendard;
-    font-size: 40px;
-    font-weight: 750;
-    line-height: normal; 
-    letter-spacing: -1.2px;
-    position: absolute; 
-    top: 400px; 
-    left: 158.5px;
-}
-
-/* 반려동물 AI 메디컬 플랫폼 */
-.h2 {
-    color: #000;
-    text-align: center;
-    font-family: Pretendard;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 32px;
-    letter-spacing: -0.5px;
-    position: absolute; 
-    bottom: 366px; 
-    left: 95.5px;
-}
-
-/* 온보딩 화면 1 굵은 글씨 */
-.h3 {
-    color: #000;
-    text-align: center;
-    font-family: Pretendard;
-    font-size: 27px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 37px;
-    letter-spacing: -0.8px;
-    position: absolute; 
-    top: 180px; 
-    left: 75px;
-}
-
-/* 온보딩 화면 1 작은 글씨 */
-.p1 {
-    color: #A1A1A1;
-    text-align: center;
-    font-family: Pretendard;
-    font-size: 17.5px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 26px;
-    letter-spacing: -0.5px;
-    position: absolute; 
-    top: 270px; 
-    left: 47px;
-}
-
-/* 온보딩 화면 2 글씨 */
-.h4 {
-    position: relative;
-    color: #000;
-    text-align: center;
-    font-family: Pretendard;
-    font-size: 26.5px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 37px;
-    letter-spacing: -0.8px;
-    top: -605px; 
-    left: 388px;
-}
-
-/* 온보딩 화면 3 글씨 */
-.h4_3 {
-    position: relative;
-    color: #000;
-    text-align: center;
-    font-family: Pretendard;
-    font-size: 26.5px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 37px;
-    letter-spacing: -0.8px;
-    top: -1432px; 
-    left: 778px;
-}
-
-/* 온보딩 화면 4 굵은 글씨 */
-.h5 {
-    color: #000;
-    text-align: center;
-    font-family: Pretendard;
-    font-size: 26.5px;
+    font-size: 29px;
     font-style: normal;
     font-weight: 700;
     line-height: 37px;
     letter-spacing: -0.725px;
+    position: absolute; 
+    top: 130px; 
+    left:48px;
+}
+
+/* 온보딩 화면 2 작은 글씨 */
+.p1 {
+    color: #A1A1A1;
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 26px; /* 130% */
+    letter-spacing: -0.5px;
     position: relative; 
-    top: -2222px; 
+    top: -703px;
+    left: 390px;
+}
+
+/* 온보딩 화면 2 글씨 */
+.h2 {
+    position: relative;
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 29px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 37px; /* 127.586% */
+    letter-spacing: -0.725px;
+    top: -685px; 
+    left: 388px;
+}
+
+/* 온보딩 화면 3 글씨 */
+.h2_3 {
+    position: relative;
+    color: #000;
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 29px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 37px; /* 127.586% */
+    letter-spacing: -0.725px;
+    top: -710px; 
+    left: 780px;
+}
+
+/* 온보딩 화면 2 작은 글씨 */
+.p2 {
+    color: #A1A1A1;
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 26px; /* 130% */
+    letter-spacing: -0.5px;
+    position: relative; 
+    top: -728px;
+    left: 785px;
+}
+
+/* 온보딩 화면 4 굵은 글씨 */
+.h3 {
+    color: #000;
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 29px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 37px; /* 127.586% */
+    letter-spacing: -0.725px;
+    position: relative; 
+    top: -1510px; 
     left: 1168px;
 }
 
 /* 온보딩 화면 4 작은 글씨 */
-.p2 {
+.p3 {
     color: #A1A1A1;
     text-align: center;
     font-family: Pretendard;
@@ -236,25 +261,41 @@ body {
     line-height: 26px;
     letter-spacing: -0.5px;
     position: relative; 
-    top: -2262px; 
+    top: -1535px; 
     left: 1168px;
 }
 
 
 /* 온보딩 화면 5 큰 글씨 */
-.h6 {
+.h4 {
     color: #000;
     text-align: center;
     font-family: Pretendard;
-    font-size: 26.5px;
+    font-size: 29px;
     font-style: normal;
     font-weight: 700;
-    line-height: 38px;
+    line-height: 37px; /* 127.586% */
     letter-spacing: -0.725px;
     position: relative; 
-    top: -3052px; 
+    top: -2316px; 
     left: 1558px;
 }
+
+/* 온보딩 화면 5 작은 글씨 */
+.p4 {
+    color: #A1A1A1;
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 26px; /* 130% */
+    letter-spacing: -0.5px;
+    position: relative; 
+    top: -2348px; 
+    left: 1558px;
+}
+
 
 /* "이전", "다음" 버튼 위치 */
 .next,
@@ -281,7 +322,7 @@ body {
 /* 슬라이드 네비게이션 */
 .dots-wrapper {
     position: absolute; 
-    top: 100px; 
+    top: 50px; 
     left: 175px; 
     transform: translateX(-50%); 
 }

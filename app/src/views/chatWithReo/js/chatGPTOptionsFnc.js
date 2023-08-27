@@ -41,6 +41,7 @@ btn1.innerText = "질문 모드"
 btn2.innerText = "진단 모드"
 textDiv.innerText = "원하시는 모드를 선택해 주세요!";
 messages.push({ role: 'assistant',content:textDiv.innerText})
+sendChatToServer(chatRoomID=dbchatRoomID,email=dbemail,bubbleForm="gptOption",value="chatModeChooseSLT")
 
 textDiv.appendChild(hrLine)
 
@@ -52,7 +53,6 @@ textDiv.appendChild(btn2)
 BTNBUBBLEEVENT(btn1)
 BTNBUBBLEEVENT(btn2)
 displayContainerScrollTop()
-chattingPush(addGPTOptions,chatModeChooseSLT)
 CP = "모드 선택";
 }
 
@@ -66,6 +66,7 @@ btn1.innerText = "네"
 btn2.innerText = "처음으로"
 textDiv.innerText = "반려동물의 상태를 알아보기 위해 \n 질문에 대한 답변을 해주세요!"
 messages.push({ role: 'assistant',content:textDiv.innerText})
+sendChatToServer(chatRoomID=dbchatRoomID,email=dbemail,bubbleForm="gptOption",value="youShouldQnASLT")
 
 textDiv.appendChild(hrLine)
 
@@ -77,7 +78,6 @@ textDiv.appendChild(btn2)
 BTNBUBBLEEVENT(btn1)
 BTNBUBBLEEVENT(btn2)
 displayContainerScrollTop()
-chattingPush(addGPTOptions,chatModeChooseSLT)
 CP = "진단 모드"
 }
 
@@ -91,7 +91,7 @@ function dogOrCatSLT(textDiv){
     btn2.innerText = "고양이에요"
     textDiv.innerText = "아이가 강아지인지 고양이인지 알려주세요."
     messages.push({ role: 'assistant',content:textDiv.innerText})
-
+    sendChatToServer(chatRoomID=dbchatRoomID,email=dbemail,bubbleForm="gptOption",value="dogOrCatSLT")
     textDiv.appendChild(hrLine)
     
     emphasizeKeywords(textDiv)
@@ -101,7 +101,6 @@ function dogOrCatSLT(textDiv){
     
     BTNBUBBLEEVENT(btn1)
     BTNBUBBLEEVENT(btn2)
-    chattingPush(addGPTOptions,dogOrCatSLT)
     displayContainerScrollTop()
     
     CP = "강아지 고양이"
@@ -117,6 +116,8 @@ function maleOrFemaleSLT(textDiv){
     btn2.innerText = "암컷이에요"
     textDiv.innerText = "아이의 성별을 알려주세요."
     messages.push({ role: 'assistant',content:textDiv.innerText})
+    sendChatToServer(chatRoomID=dbchatRoomID,email=dbemail,bubbleForm="gptOption",value="maleOrFemaleSLT")
+
 
     textDiv.appendChild(hrLine)
     
@@ -127,7 +128,6 @@ function maleOrFemaleSLT(textDiv){
     
     BTNBUBBLEEVENT(btn1)
     BTNBUBBLEEVENT(btn2)
-    chattingPush(addGPTOptions,maleOrFemaleSLT)
     displayContainerScrollTop()
     
     CP = "성별 입력"
@@ -142,6 +142,8 @@ btn2.classList.add(GPTOPTIONBTN, "RESETSELECT")
 btn1.innerText = "추가 질문하기"
 btn2.innerText = "처음으로"
 textDiv.innerText = "아이의 진단이 끝났습니다!\n추가 질문을 원하시면 선택해주세요."
+messages.push({ role: 'assistant',content:textDiv.innerText})
+sendChatToServer(chatRoomID=dbchatRoomID,email=dbemail,bubbleForm="gptOption",value="petDiagnoseCompleteSLT")
 
 textDiv.appendChild(hrLine)
 
@@ -153,7 +155,6 @@ textDiv.appendChild(btn2)
 BTNBUBBLEEVENT(btn1)
 BTNBUBBLEEVENT(btn2)
 
-chattingPush(addGPTOptions,petDiagnoseCompleteSLT)
 displayContainerScrollTop()
 CP = "추가 질문"
 }
@@ -169,6 +170,8 @@ btn2.innerText = "처음으로"
 textDiv.innerText = "이미지 진단 모드로 질병을 분석할까요?"
 messages.push({ role: 'assistant',content:textDiv.innerText})
 
+sendChatToServer(chatRoomID=dbchatRoomID,email=dbemail,bubbleForm="gptOption",value="imageDiagnoseSLT")
+
 textDiv.appendChild(hrLine)
 
 emphasizeKeywords(textDiv)
@@ -178,7 +181,6 @@ textDiv.appendChild(btn2)
 
 BTNBUBBLEEVENT(btn1)
 BTNBUBBLEEVENT(btn2)
-chattingPush(addGPTOptions,imageDiagnoseSLT)
 displayContainerScrollTop()
 CP = "이미지 진단"
 }
@@ -204,7 +206,6 @@ function imageReuproadSLT(textDiv){
     BTNBUBBLEEVENT(btn1)
     BTNBUBBLEEVENT(btn2)
     
-    chattingPush(addGPTOptions,petDiagnoseCompleteSLT)
     displayContainerScrollTop()
     CP = "재업로드"
     }
@@ -224,7 +225,6 @@ emphasizeKeywords(textDiv)
 textDiv.appendChild(btn1)
 
 BTNBUBBLEEVENT(btn1)
-chattingPush(addGPTOptions,takePictureSLT)
 displayContainerScrollTop()
 CP = "사진 업로드"
 }
@@ -253,7 +253,6 @@ textDiv.appendChild(btn3)
 BTNBUBBLEEVENT(btn1)
 BTNBUBBLEEVENT(btn2)
 BTNBUBBLEEVENT(btn3)
-chattingPush(addGPTOptions,moreQuestionSLT)
 displayContainerScrollTop()
 CP = "어떤게 궁금"
 }
@@ -277,6 +276,7 @@ gptHeadChecker(boxDiv);
 boxDiv.appendChild(textDiv)
 selectFncs(textDiv)
 
+
 recentSpeaker = "gpt";
 }
 
@@ -296,7 +296,48 @@ boxDiv.appendChild(img)
 
 
 recentSpeaker = "user";
-chattingPush(addUserImageBubble,src)
 
 displayContainerScrollTop()
+}
+
+const keysWithVariations = [
+    ["종"], ["품종"], ["성별", "성"], ["의심질환", "의심 질환", "질환"], ["이상"],
+    ["생년월일", "생일", "월일"], ["과거병력", "과거 병력", "병력"]
+];
+
+function parseCategory(text) {
+    const categories = {};
+    
+    // 정규 표현식을 사용하여 카테고리 추출
+    const pattern = /([^:\s]+)\s*:\s*([^,\n]+)/g;
+    let match;
+    
+    while ((match = pattern.exec(text)) !== null) {
+        const key = match[1].trim();
+        const value = match[2].trim();
+        categories[key] = value;
+    }
+    
+    return categories;
+}
+
+function extractKeysWithVariations(obj, keysWithVariations) {
+    const result = {};
+
+    for (const keyVariations of keysWithVariations) {
+        let foundValue = null;
+        
+        for (const variation of keyVariations) {
+            if (obj.hasOwnProperty(variation)) {
+                foundValue = obj[variation];
+                break;
+            }
+        }
+        
+        if (foundValue !== null) {
+            result[keyVariations[0]] = foundValue;
+        }
+    }
+
+    return result;
 }

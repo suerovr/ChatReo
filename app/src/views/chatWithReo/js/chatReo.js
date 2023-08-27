@@ -4,4 +4,5 @@
 sendButton.addEventListener("click",()=>{
     event.preventDefault();
     addUserChattingBubble(chatInput.value)
+    console.log("asd")
 })

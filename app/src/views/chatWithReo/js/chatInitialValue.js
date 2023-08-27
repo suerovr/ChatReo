@@ -102,4 +102,17 @@ const conversationData = [
     
     }
     
-    simulateChat(conversationData, 0);
+    let dbchatRoomID = window.localStorage.getItem("RoomKey")
+    let dbPrint = window.localStorage.getItem("needPrint")
+    
+    if (dbPrint == "true"){
+        fetchChatDataFromServer(dbchatRoomID)
+    } else{
+        simulateChat(conversationData, 0);
+    }
+
+
+
+
+    window.localStorage.removeItem("RoomKey");
+    window.localStorage.removeItem("needPrint")

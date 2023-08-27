@@ -12,27 +12,29 @@
     <div class="container">
         <img src="loginimage/mainlogo.svg" alt="이미지" class="mainlogo">
 
-        <div class="center">
-            <div class="emailtext">이메일</div>
-            <div class="email input">
-                <h3>
-                    <label for="email_input"></label>
-                    <input type="text" id="email_input" placeholder="Email" oninput="handleInputChange(this)" />
-                </h3>
+        <form action="/loginhome" method="post">
+            <div class="center">
+                <div class="emailtext">이메일</div>
+                <div class="email input">
+                    <h3>
+                        <label for="email_input"></label>
+                        <input type="text" id="email_input" name="email" placeholder="Email" />
+                    </h3>
+                </div>
+
+                <div class="nametext">이름</div>
+                <div class="name input">
+                    <h3>
+                        <label for="name_input"></label>
+                        <input type="text" id="name_input" name="name" placeholder="Name" />
+                    </h3>
+                </div>
             </div>
 
-            <div class="nametext">이름</div>
-            <div class="name input">
-                <h3>
-                    <label for="name_input"></label>
-                    <input type="text" id="name_input" placeholder="Name" oninput="handleInputChange(this)" />
-                </h3>
-            </div>
-        </div>
-
-        <button class="startbox" onclick="location.href='/home-login'">
-            <img class="start" src="loginimage/start.svg" alt="이미지">
-        </button>
+            <button type="submit" class="startbox">
+                <img class="start" src="loginimage/start.svg" alt="이미지">
+            </button>
+        </form>
 
     </div>
 </body>
