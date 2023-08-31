@@ -1,5 +1,5 @@
 // client.js
-const dbemail = "280615testemail"
+const dbemail = window.localStorage.getItem("email")
 
 let questionSign = 0;
 let diagnoseSign = 0;

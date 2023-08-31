@@ -18,7 +18,7 @@
                 <div class="email input">
                     <h3>
                         <label for="email_input"></label>
-                        <input type="text" id="email_input" name="email" placeholder="Email" />
+                        <input type="text" id="email_input" name="email" placeholder="Email"/>
                     </h3>
                 </div>
 
@@ -37,6 +37,14 @@
         </form>
 
     </div>
+    <script>
+        const submitbtn = document.querySelector(".startbox")
+        const submitinput = document.querySelector("#email_input")
+        submitbtn.addEventListener("click",()=>{
+            const emailname = submitinput.value
+            window.localStorage.setItem("email", emailname)
+        })
+    </script>
 </body>
 
 </html>

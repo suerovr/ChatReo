@@ -70,3 +70,19 @@ async function fetchImportChat(chatRoomID, email) {
 
 // 함수 실행
 fetchImportChat("someChatRoomID", "somdfdffcom");
+
+async function fetchUserDataItem(email, ChatRoomID, attributeName) {
+    try {
+        const response = await fetch(`/dbget/userDataItem?email=${encodeURIComponent(email)}&ChatRoomID=${encodeURIComponent(ChatRoomID)}&attributeName=${encodeURIComponent(attributeName)}`);
+        if (response.ok) {
+            const data = await response.json();
+            console.log('Received user data item:', data.data);
+        } else {
+            console.log('Server responded with status:', response.status);
+        }
+    } catch (error) {
+        console.error('Fetch error:', error);
+    }
+}
+
+fetchUserDataItem('example@example.com', 'chat1234', '생년월일');  // 예시 호출

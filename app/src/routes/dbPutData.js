@@ -17,20 +17,21 @@ const view = {
         res.render("test/test");
     },
 }
+
 async function putUserToDynamoDB(email, 과거병력 = "N/A", 생년월일 = "N/A", 성별 = "N/A", 의심질환 = "N/A", 이상 = "N/A", 종 = "N/A", 품종 = "N/A", ChatRoomID = "N/A", gpt솔루션 = "N/A") {
   const params = {
     TableName: "ChatReo_User",
     Item: {
       email: email,
-      과거병력: 과거병력,
-      생년월일: 생년월일,
-      성별: 성별,
-      의심질환: 의심질환,
-      이상: 이상,
-      종: 종,
-      품종: 품종,
+      pastMedicalHistory: 과거병력,
+      dateOfBirth: 생년월일,
+      gender: 성별,
+      suspectedDisease: 의심질환,
+      abnormalities: 이상,
+      species: 종,
+      breed: 품종,
       ChatRoomID: ChatRoomID,
-      gpt솔루션: gpt솔루션
+      gptSolution: gpt솔루션
     }
   };
   try {
@@ -130,7 +131,63 @@ async function getChatsByEmail(email) {
     }
 }
 
-//전체삭제
+const translateToKorean = (attributeName) => {
+    const translations = {
+        "pastMedicalHistory": "과거병력",
+        "dateOfBirth": "생년월일",
+        "gender": "성별",
+        "suspectedDisease": "의심질환",
+        "abnormalities": "이상질환",
+        "species": "종류",
+        "breed": "품종",
+        "gptSolution": "gpt솔루션"
+    };
+    
+    return translations[attributeName] || attributeName;
+};
+
+async function getUserDiagnoseDataByEmail(email) {
+    const attributeNames = [
+        "breed", "species", "gender", "dateOfBirth",
+        "pastMedicalHistory", "abnormalities", "suspectedDisease", "gptSolution"
+    ];
+
+    const params = {
+        TableName: "ChatReo_User",
+        KeyConditionExpression: "#email = :emailValue",
+        ProjectionExpression: attributeNames.join(', '),
+        ExpressionAttributeNames: {
+            "#email": "email"
+        },
+        ExpressionAttributeValues: {
+            ":emailValue": email
+        }
+    };
+
+    try {
+        const response = await ddbDocClient.send(new QueryCommand(params));
+        if (response.Items && response.Items.length > 0) {
+            const resultArray = [];
+            for (const item of response.Items) {
+                const result = {};
+                for (const attr of attributeNames) {
+                    const koreanKey = translateToKorean(attr);  // 이 함수의 정의가 필요합니다.
+                    result[koreanKey] = item[attr] ? item[attr] : null;
+                }
+                resultArray.push(result);
+            }
+            return resultArray;
+        } else {
+            return null;
+        }
+    } catch (error) {
+        console.error("Error fetching user data:", error);
+        throw error;
+    }
+}
+
+
+const MAX_RETRIES = 5; // 최대 재시도 횟수
 
 async function deleteAllItems() {
     const params = {
@@ -139,22 +196,47 @@ async function deleteAllItems() {
 
     try {
         const data = await ddbDocClient.send(new ScanCommand(params));
+        console.log("Items from Scan:", data.Items);
 
         for (const item of data.Items) {
-            const deleteParams = {
-                TableName: "ChatReo_Chat",
-                Key: {
-                    "ChatRoomID": item.ChatRoomID,
-                    "TimeStamp": item.TimeStamp
-                }
-            };
+            if (item.ChatRoomID && item.TimeStamp) {
+                const chatRoomID = item.ChatRoomID.S;
+                const timeStamp = item.TimeStamp.S;
 
-            await ddbDocClient.send(new DeleteCommand(deleteParams));
+                const deleteParams = {
+                    TableName: "ChatReo_Chat",
+                    Key: {
+                        "ChatRoomID": chatRoomID,
+                        "TimeStamp": timeStamp
+                    }
+                };
+
+                let retryCount = 0;
+                let success = false;
+
+                while (!success && retryCount < MAX_RETRIES) {
+                  try {
+                    await ddbDocClient.send(new DeleteCommand(deleteParams));
+                    success = true; // 성공하면 루프 종료
+                  } catch (err) {
+                    if (err.name === 'ProvisionedThroughputExceededException') {
+                      await new Promise(resolve => setTimeout(resolve, Math.pow(2, retryCount) * 100));
+                      retryCount++;
+                    } else {
+                      console.error("Error deleting items:", err);
+                      break;
+                    }
+                  }
+                }
+
+            } else {
+            }
         }
     } catch (err) {
         console.error("Error deleting items:", err);
     }
 }
+
 
 // process
 const process = {
@@ -249,8 +331,23 @@ const process = {
         res.status(500).send('Error deleting items: ' + err.toString());
     }
 },
-
-}
+    GetDiagnoseData: async (req, res) => {
+    const email = req.query.email;
+    if (!email) {
+        return res.status(400).send('Email is required');
+    }
+    try {
+        const data = await getUserDiagnoseDataByEmail(email);
+        if (data) {
+            res.json(data);
+        } else {
+            res.status(404).send('No data found');
+        }
+    } catch (error) {
+        res.status(500).send('Internal Server Error');
+    }
+    }
+};
 
 
 module.exports = {

@@ -59,9 +59,22 @@
         <div class="bottom">Dr.Reo</div>
     </div>
     <script>
+        const email = window.localStorage.getItem("email")
+        window.localStorage.removeItem("email");
         
-        const chattingBtn = document.querySelector(".ChatWithReoBox")
-        chattingBtn.addEventListener("click",()=>{
+        const chattingBtn0 = document.querySelector(".ChatWithReoBox")
+            chattingBtn0.addEventListener("click",()=>{
+            window.localStorage.setItem("email", email)
+        })
+        
+        const chattingBtn1 = document.querySelector(".DiagLogBox")
+            chattingBtn1.addEventListener("click",()=>{
+            window.localStorage.setItem("email",email)
+        })
+        
+        
+        const chattingBtn2 = document.querySelector(".ChatWithReoBox")
+        chattingBtn2.addEventListener("click",()=>{
             let today = new Date();
             let month = String(today.getMonth()+1).padStart(2,'0');
             let day = String(today.getDate()).padStart(2,'0');
@@ -70,6 +83,11 @@
             let seconds = String(today.getSeconds()).padStart(2, '0'); // 초
             const TimeString = String(month)+String(day)+String(hours)+String(minutes)+String(seconds)
             window.localStorage.setItem("RoomKey", TimeString)
+        })
+        
+        const chattingBtn3 = document.querySelector(".ChatListBox")
+            chattingBtn3.addEventListener("click",()=>{
+            window.localStorage.setItem("email",email)
         })
     </script>
 </body>

@@ -58,6 +58,8 @@ body {
   position: absolute;
   top: 64px;
   left: 32px;
+  border:none;
+  background:transparent;
 }
 
 .chatListContainer {

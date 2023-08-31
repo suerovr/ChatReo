@@ -69,24 +69,6 @@ async function putUserToDynamoDB(
 }
 
 
-async function getChatsFromDynamoDB(chatRoomID) {
-    const params = {
-        TableName: "ChatReo_Chat",
-        KeyConditionExpression: "ChatRoomID = :roomId",
-        ExpressionAttributeValues: {
-            ":roomId": chatRoomID
-        }
-    };
-
-    try {
-        const response = await ddbDocClient.send(new QueryCommand(params));
-        return response.Items;
-    } catch (error) {
-        console.error("Error fetching data:", error);
-        throw error;
-    }
-}
-
 module.exports = {
     putChatToDynamoDB,
     getChatsFromDynamoDB

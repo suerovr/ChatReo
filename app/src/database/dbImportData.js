@@ -6,11 +6,12 @@ const { GetItemCommand } = require("@aws-sdk/client-dynamodb");
 const client = new DynamoDBClient({ region: "ap-northeast-2" });
 const ddbDocClient = DynamoDBDocumentClient.from(client);
 
-async function getUserDataFromDynamoDB(email, attributeName) {
+async function getUserDataFromDynamoDB(email,ChatRoomID, attributeName) {
     const params = {
         TableName: "ChatReo_User",
         Key: {
-            email: { S: email }  // DynamoDB의 String 데이터 유형을 명시
+            email: { S: email } ,
+            ChatRoomID: { S: ChatRoomID }// DynamoDB의 String 데이터 유형을 명시
         },
         ProjectionExpression: "#attrName",
         ExpressionAttributeNames: {
@@ -31,9 +32,28 @@ async function getUserDataFromDynamoDB(email, attributeName) {
 // 특정 email 주소의 '과거병력' 데이터를 가져오기
 (async () => {
     try {
-        const userData = await getUserDataFromDynamoDB("example@email.com", "과거병력");
+        const userData = await getUserDataFromDynamoDB("example@example.com","chat1234", "과거병력");
         console.log(userData);
     } catch (error) {
         console.error("Error:", error);
     }
 })();
+
+
+async function getChatsFromDynamoDB(chatRoomID) {
+    const params = {
+        TableName: "ChatReo_Chat",
+        KeyConditionExpression: "ChatRoomID = :roomId",
+        ExpressionAttributeValues: {
+            ":roomId": chatRoomID
+        }
+    };
+
+    try {
+        const response = await ddbDocClient.send(new QueryCommand(params));
+        return response.Items;
+    } catch (error) {
+        console.error("Error fetching data:", error);
+        throw error;
+    }
+}

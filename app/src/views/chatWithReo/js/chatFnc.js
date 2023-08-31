@@ -135,7 +135,7 @@ function addGPTChattingBubble(text){
     } else if (questionSign == 1){
         sendChatToServer(chatRoomID=dbchatRoomID,email=dbemail,bubbleForm="gptText",value=text,question = "true")
     } else if (diagnoseSign == 1){
-        sendChatToServer(chatRoomID=dbchatRoomID,email=dbemail,bubbleForm="gptText",value=text,diagnose = "true")
+        sendChatToServer(chatRoomID=dbchatRoomID,email=dbemail,bubbleForm="gptText",value=text,diagnose = "true"    )
 
     }
     boxDiv.appendChild(textDiv)

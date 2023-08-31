@@ -2,7 +2,7 @@ $(document).ready(function () {
   $('#loading').hide();
 });
 
-const api_key = "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"
+const api_key = "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"
 
 messages = [
   { role: 'system', content: '너는 반려동물을 키우는 사용자들에게 질병 이름을 맞추고 질병을 진단해주는 친절한 의사 닥터 레오야.' }
@@ -55,9 +55,8 @@ function chatGPT(text) {
     data: JSON.stringify(data),
   }).then(function (response) {
     $('#loading').hide();
-    questionSign = 1;
+    
     addGPTChattingBubble(response.choices[0].message.content)
-    questionSign = 0;
   });
 }
 
@@ -79,11 +78,9 @@ function diagGPT() {
     const RSP = response.choices[0].message.content
     if ((RSP.indexOf("질환:")!=-1 )||(RSP.indexOf("솔루션 :")!=-1)||(RSP.indexOf("월일:")!=-1)){
       emphasizeDisable = 1;
-      diagnoseSign = 1;
       addGPTChattingBubble(RSP)
       STOptionFnc(petDiagnoseCompleteSLT)
       emphasizeDisable = 0;
-      diagnoseSign = 0;
       const extractedInformation = extractKeysWithVariations(parseCategory(RSP),keysWithVariations)
       extractedInformation.ChatRoomID = dbchatRoomID
       extractedInformation.gpt솔루션 = RSP

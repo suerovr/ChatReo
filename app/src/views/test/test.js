@@ -1,21 +1,25 @@
-async function fetchChatsByEmail(email) {
-    const url = `/getChatsByEmail?email=${email}`;
-
+async function fetchUserDiagnoseItem(email) {
     try {
-        const response = await fetch(url);
-
-        if (!response.ok) {
-            console.error(`Failed to fetch chats: HTTP status ${response.status}`);
+        const response = await fetch(`/dbget/userDiagnoseItem?email=${email}`);
+        if (response.status === 200) {
+            const data = await response.json();
+            return data;
+        } else if (response.status === 404) {
+            console.error('No data found');
+            return null;
+        } else {
+            console.error('Error fetching data');
             return null;
         }
-
-        const chats = await response.json();
-        console.log("Fetched chats:", chats);
-        return chats;
     } catch (error) {
-        console.error("Error fetching chats:", error);
+        console.error('Fetch failed:', error);
         return null;
     }
 }
 
-fetchChatsByEmail("0458testemail");
+fetchUserDiagnoseItem('example@example.com')
+    .then(data => {
+        if (data) {
+            console.log('Received data:', data);
+        }
+    });

@@ -10,12 +10,13 @@ const dynamoDBClient = new DynamoDBClient({
 });
 const ddbDocClient = DynamoDBDocumentClient.from(dynamoDBClient);
 
+
 const process = {
     PutChatUserInfo: async (req, res) => {
-    const { chatRoomID } = req.body; // 클라이언트로부터 받은 chatRoomID
+    const { chatRoomID, email } = req.body; // 클라이언트로부터 받은 chatRoomID
 
     try {
-        const chats = await getChatsFromDynamoDB(chatRoomID); // 이전에 정의한 함수를 호출
+        const chats = await getChatsFromDynamoDB(chatRoomID, email); // 이전에 정의한 함수를 호출
         res.status(200).json(chats); // 클라이언트에게 데이터를 JSON 형태로 반환
     } catch (error) {
         console.error('Error:', error);
